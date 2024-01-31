@@ -18,14 +18,15 @@ public class Person {
     @Column(name = "Name", length = 50, nullable = false)
     private String name;
     @Column(name = "Email", length = 50, nullable = false)
-    private String email;
+    private String email;    
     @ManyToOne
-    @JoinColumn(name = "GenderID", nullable = true, unique = false)
-    private Gender genderId ;
-    
+    // @ColumnDefault(value = "3")  <-- this is from hibernate
+    @JoinColumn(name = "GenderID", nullable = true, unique = false, columnDefinition = "int default 3")
+    private Gender genderId;
+        
     public Gender getGenderId() {
         return genderId;
-    }
+    }    
     public void setGenderId(Gender genderId) {
         this.genderId = genderId;
     }

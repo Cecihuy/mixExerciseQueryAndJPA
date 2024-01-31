@@ -1,33 +1,25 @@
-CREATE DATABASE Sample;
+INSERT INTO tblPerson(ID, Name, Email)
+	VALUES(7, 'Rich', 'r@r.com');
 
-USE Sample;
-
-CREATE TABLE tblPerson(
-	ID INT PRIMARY KEY NOT NULL,
-	Name NVARCHAR(50) NOT NULL,
-	Email NVARCHAR(50) NOT NULL,
-	GenderID INT
-	);
-
-CREATE TABLE tblGender(
-	ID INT NOT NULL PRIMARY KEY,
-	Gender NVARCHAR(50) NOT NULL
-	);
-
-INSERT INTO tblGender VALUES
-	(1, 'Male'),
-	(2, 'Female'),
-	(3, 'Unknown');
-
+--Altering an existing column to add a default constraint
 ALTER TABLE tblPerson
-	ADD CONSTRAINT tblPerson_GenderID_FK
-	FOREIGN KEY(GenderID)
-	REFERENCES tblGender(ID);
+	ADD CONSTRAINT DF_tblPerson_GenderID
+	DEFAULT 3 FOR GenderID;
 
-INSERT INTO tblPerson VALUES
-	(1, 'John', 'j@j.com', 1),
-	(2, 'Mary', 'm@m.com', 2),
-	(3, 'Simon', 's@s.com', 1),
-	(4, 'Sam', 'sam@sam.com', 1),
-	(5, 'May', 'may@may.com', 2),
-	(6, 'Kenny', 'k@k.com', 3);
+INSERT INTO tblPerson(ID, Name, Email)
+	VALUES(8, 'Mike', 'mike@r.com');
+
+INSERT INTO tblPerson(ID, Name, Email, GenderID)
+	VALUES(9, 'Sara', 's@r.com', 1);
+
+INSERT INTO tblPerson(ID, Name, Email, GenderID)
+	VALUES(10, 'Johnny', 'j@r.com', NULL);
+
+--Adding a new column, with default value, to an existing table
+ALTER TABLE {TABLE_NAME}
+	ADD {COLUMN_NAME}{DATA_TYPE}{NULL|NOT NULL}
+	CONSTRAINT {CONSTRAINT_NAME} DEFAULT {DEFAULT_VALUE};
+
+--Dropping a constraint
+ALTER TABLE tblPerson
+	DROP CONSTRAINT DF_tblPerson_GenderID;

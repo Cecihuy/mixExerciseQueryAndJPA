@@ -47,6 +47,27 @@ public class Main {
         person6.setEmail("k@k.com");
         person6.setGenderId(gender3);
 
+        Person person7 = new Person();
+        person7.setName("Rich");
+        person7.setEmail("r@r.com");
+        person7.setGenderId(null);
+
+        //problem : on initialization, person8.setGenderId is always set to null instead unset
+        Person person8 = new Person();
+        person8.setName("Mike");
+        person8.setEmail("mike@r.com");
+        // person8.setGenderId(apaHayooo?);
+
+        Person person9 = new Person();
+        person9.setName("Sara");
+        person9.setEmail("s@r.com");
+        person9.setGenderId(gender1);
+
+        Person person10 = new Person();
+        person10.setName("Johnny");
+        person10.setEmail("j@r.com");
+        person10.setGenderId(null);
+
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pragim");
         EntityManager entityManager = emf.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
@@ -61,7 +82,11 @@ public class Main {
         entityManager.persist(person4);
         entityManager.persist(person5);
         entityManager.persist(person6);
-        transaction.commit();
+        entityManager.persist(person7);
+        entityManager.persist(person8);
+        entityManager.persist(person9);
+        entityManager.persist(person10);
+        transaction.commit();        
 
         entityManager.close();
     }

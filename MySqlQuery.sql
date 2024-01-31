@@ -1,33 +1,26 @@
-create database sample;
+INSERT INTO tblPerson(ID, Name, Email)
+	VALUES(7, 'Rich', 'r@r.com');
 
-use sample;
+-- Altering an existing column to add a default constraint    
+ALTER TABLE tblPerson
+	CHANGE COLUMN GenderID
+	GenderID INT NULL DEFAULT 3 ;
 
-create table tblperson(
-	ID int primary key not null,
-	Name nvarchar(50) not null,
-	Email nvarchar(50) not null,
-	GenderID int
-	);
+INSERT INTO tblPerson(ID, Name, Email)
+	VALUES(8, 'Mike', 'mike@r.com');
 
-create table tblgender(
-	ID int not null primary key,
-	Gender nvarchar(50) not null
-	);
+INSERT INTO tblPerson(ID, Name, Email, GenderID)
+	VALUES(9, 'Sara', 's@r.com', 1);
 
-insert into tblgender values
-	(1, 'Male'),
-	(2, 'Female'),
-	(3, 'Unknown');
+INSERT INTO tblPerson(ID, Name, Email, GenderID)
+	VALUES(10, 'Johnny', 'j@r.com', NULL);
 
-alter table tblperson
-	add constraint tblPerson_GenderID_FK
-	foreign key(GenderID)
-	references tblgender(ID);
+-- Adding a new column, with default value, to an existing table
+ALTER TABLE {TABLE_NAME}
+	ADD COLUMN {COLUMN_NAME}{DATA_TYPE}{NULL|NOT NULL}
+	DEFAULT {DEFAULT_VALUE};
 
-insert into tblperson values
-	(1, 'John', 'j@j.com', 1),
-	(2, 'Mary', 'm@m.com', 2),
-	(3, 'Simon', 's@s.com', 1),
-	(4, 'Sam', 'sam@sam.com', 1),
-	(5, 'May', 'may@may.com', 2),
-	(6, 'Kenny', 'k@k.com', 3);
+-- Dropping a constraint
+ALTER TABLE tblPerson
+	CHANGE COLUMN GenderID
+	GenderID INT NULL;

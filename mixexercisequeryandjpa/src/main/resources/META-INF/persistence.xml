@@ -12,9 +12,9 @@
             <property name="jakarta.persistence.jdbc.user" value="sa"></property>
             <property name="jakarta.persistence.jdbc.password" value="bar"></property>
             <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect"></property>
-            <property name="hibernate.hbm2ddl.auto" value="create"></property>
+            <property name="hibernate.hbm2ddl.auto" value="update"></property>
             <property name="hibernate.show_sql" value="true"></property>
-            <!-- <property name="hibernate.format_sql" value="true"></property> -->
+            <property name="hibernate.format_sql" value="true"></property>
         </properties>
     </persistence-unit>
 </persistence>

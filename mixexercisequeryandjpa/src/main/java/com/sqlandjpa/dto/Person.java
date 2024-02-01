@@ -1,6 +1,7 @@
 package com.sqlandjpa.dto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,9 +20,15 @@ public class Person {
     private String name;
     @Column(name = "Email", length = 50, nullable = false)
     private String email;    
-    @ManyToOne
-    // @ColumnDefault(value = "3")  <-- this is from hibernate
-    @JoinColumn(name = "GenderID", nullable = true, unique = false, columnDefinition = "int default 3")
+    @ManyToOne    
+    @JoinColumn(name = "GenderID", nullable = true, unique = false, columnDefinition = "int default 3",
+        foreignKey = @ForeignKey(name = "tblPerson_GenderID_FK", foreignKeyDefinition = "FOREIGN KEY (GenderID) REFERENCES tblGender (ID) ON DELETE" +
+        /* please pick one for jpa hbm2ddl.auto creation. remove double slash */
+        //" SET DEFAULT"
+        //" SET NULL"
+        " CASCADE"
+        )
+    )
     private Gender genderId;
         
     public Gender getGenderId() {

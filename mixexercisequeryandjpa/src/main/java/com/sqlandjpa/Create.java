@@ -6,7 +6,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
-public class Main {
+public class Create {
     public static void main(String[] args) {
         Gender gender1 = new Gender();
         gender1.setGender("Male");

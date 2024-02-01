@@ -30,7 +30,16 @@ public class Person {
         )
     )
     private Gender genderId;
+    // @Check(name = "CK_tblPerson_Age", constraints = "Age > 0 AND Age <150")  <-- this is from hibernate package
+    @Column(name = "Age", nullable = true, columnDefinition = "INT CHECK (Age > 0 AND Age <150)")
+    private int age;
         
+    public int getAge() {
+        return age;
+    }
+    public void setAge(int age) {
+        this.age = age;
+    }
     public Gender getGenderId() {
         return genderId;
     }    

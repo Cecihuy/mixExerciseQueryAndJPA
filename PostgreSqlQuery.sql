@@ -1,34 +1,21 @@
-DELETE FROM tblGender WHERE ID = 2;
-
 ALTER TABLE tblPerson
-	DROP CONSTRAINT tblPerson_GenderID_FK;
+	ADD Age INT NULL;
 
+-- drop check constraint if exist
 ALTER TABLE tblPerson
-	ADD CONSTRAINT tblPerson_GenderID_FK 
-	FOREIGN KEY (GenderID)
-	REFERENCES tblGender(ID)
-    ON DELETE SET DEFAULT;
+	DROP CONSTRAINT CK_tblPerson_Age;
 
-DELETE FROM tblGender WHERE ID = 2;
-
+-- create check constraint
 ALTER TABLE tblPerson
-	DROP CONSTRAINT tblPerson_GenderID_FK;
+	ADD CONSTRAINT CK_tblPerson_Age
+	CHECK(Age > 0 AND Age < 150);
 
-ALTER TABLE tblPerson
-	ADD CONSTRAINT tblPerson_GenderID_FK 
-	FOREIGN KEY (GenderID)
-	REFERENCES tblGender(ID)
-    ON DELETE SET NULL;
+-- insertion will fail
+INSERT INTO tblPerson(ID, Name, Email, Age)
+	VALUES(11, 'Chuck', 'c@c.com', 200);
 
-DELETE FROM tblGender WHERE ID = 1;
+INSERT INTO tblPerson(ID, Name, Email, Age)
+	VALUES(11, 'Chuck', 'c@c.com', 25);
 
-ALTER TABLE tblPerson
-	DROP CONSTRAINT tblPerson_GenderID_FK;
-
-ALTER TABLE tblPerson
-	ADD CONSTRAINT tblPerson_GenderID_FK 
-	FOREIGN KEY (GenderID)
-	REFERENCES tblGender(ID)
-    ON DELETE CASCADE;
-
-DELETE FROM tblGender WHERE ID = 3;
+INSERT INTO tblPerson(ID, Name, Email, Age)
+	VALUES(12, 'Chuck', 'c@c.com', NULL);

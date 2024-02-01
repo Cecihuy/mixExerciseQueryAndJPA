@@ -1,34 +1,24 @@
 USE Sample;
 
-DELETE FROM tblGender WHERE ID = 2;
-
 ALTER TABLE tblPerson
-	DROP CONSTRAINT tblPerson_GenderID_FK;
+	ADD Age INT NULL;
 
--- There is no option for MySQL to set default on deletion. use cascade or set null
--- ALTER TABLE tblPerson
--- 	ADD CONSTRAINT tblPerson_GenderID_FK 
--- 	FOREIGN KEY (GenderID)
--- 	REFERENCES tblGender(ID)
--- 	ON DELETE SET DEFAULT;
-
-ALTER TABLE tblperson
-ADD CONSTRAINT tblPerson_GenderID_FK
-  FOREIGN KEY (GenderID)
-  REFERENCES tblgender (ID)
-  ON DELETE SET NULL;
-
-DELETE FROM tblGender WHERE ID = 2;
-
+-- drop check constraint if exist
 ALTER TABLE tblPerson
-	DROP CONSTRAINT tblPerson_GenderID_FK;
+	DROP CONSTRAINT CK_tblPerson_Age;
 
+-- now MySQL 8.0.16 and above support check constraint
+-- create check constraint
 ALTER TABLE tblPerson
-	ADD CONSTRAINT tblPerson_GenderID_FK 
-	FOREIGN KEY (GenderID)
-	REFERENCES tblGender(ID)
-    ON DELETE CASCADE;
+	ADD CONSTRAINT CK_tblPerson_Age
+	CHECK(Age > 0 AND Age < 150);
 
-DELETE FROM tblGender WHERE ID = 1;
+-- insertion will fail
+INSERT INTO tblPerson(ID, Name, Email, Age)
+	VALUES(11, 'Chuck', 'c@c.com', 200);
 
-DELETE FROM tblGender WHERE ID = 3;
+INSERT INTO tblPerson(ID, Name, Email, Age)
+	VALUES(11, 'Chuck', 'c@c.com', 25);
+
+INSERT INTO tblPerson(ID, Name, Email, Age)
+	VALUES(12, 'Chuck', 'c@c.com', NULL);

@@ -1,21 +1,43 @@
-ALTER TABLE tblPerson
-	ADD Age INT NULL;
+USE Sample;
 
--- drop check constraint if exist
-ALTER TABLE tblPerson
-	DROP CONSTRAINT CK_tblPerson_Age;
+CREATE TABLE tblPerson1(
+	PersonId INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START 1 INCREMENT 1),
+	Name VARCHAR(50));
 
--- create check constraint
-ALTER TABLE tblPerson
-	ADD CONSTRAINT CK_tblPerson_Age
-	CHECK(Age > 0 AND Age < 150);
+INSERT INTO tblPerson1(Name) VALUES('John');
+
+INSERT INTO tblPerson1(Name) VALUES('Tom');
+
+INSERT INTO tblPerson1(Name) VALUES('Sara');
+
+DELETE FROM tblPerson1 WHERE PersonId=1;
+
+INSERT INTO tblPerson1(Name) VALUES('Todd');
 
 -- insertion will fail
-INSERT INTO tblPerson(ID, Name, Email, Age)
-	VALUES(11, 'Chuck', 'c@c.com', 200);
+INSERT INTO tblPerson1(PersonId, Name) VALUES(1, 'Jane');
 
-INSERT INTO tblPerson(ID, Name, Email, Age)
-	VALUES(11, 'Chuck', 'c@c.com', 25);
+-- in postgre, no need this
+-- SET IDENTITY_INSERT tblPerson1 ON;
 
-INSERT INTO tblPerson(ID, Name, Email, Age)
-	VALUES(12, 'Chuck', 'c@c.com', NULL);
+INSERT INTO tblPerson1(PersonId, Name) 
+	OVERRIDING SYSTEM VALUE
+	VALUES(1, 'Jane');
+	
+-- in postgre, no need this
+-- SET IDENTITY_INSERT tblPerson1 OFF;
+
+INSERT INTO tblPerson1(Name) VALUES('Martin');
+
+DELETE FROM tblPerson1;
+
+INSERT INTO tblPerson1(Name) VALUES('Martin');
+
+DELETE FROM tblPerson1;
+
+-- in postgre, this isn't work
+-- DBCC CHECKIDENT(tblPerson1, RESEED, 0);
+
+ALTER SEQUENCE tblperson1_personid_seq RESTART;
+
+INSERT INTO tblPerson1(Name) VALUES('Martin');

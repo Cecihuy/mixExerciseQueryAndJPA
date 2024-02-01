@@ -1,24 +1,39 @@
 USE Sample;
 
-ALTER TABLE tblPerson
-	ADD Age INT NULL;
+CREATE TABLE tblPerson1(
+	PersonId INT PRIMARY KEY AUTO_INCREMENT,
+	Name NVARCHAR(50));
 
--- drop check constraint if exist
-ALTER TABLE tblPerson
-	DROP CONSTRAINT CK_tblPerson_Age;
+INSERT INTO tblPerson1(Name) VALUES('John');
 
--- now MySQL 8.0.16 and above support check constraint
--- create check constraint
-ALTER TABLE tblPerson
-	ADD CONSTRAINT CK_tblPerson_Age
-	CHECK(Age > 0 AND Age < 150);
+INSERT INTO tblPerson1(Name) VALUES('Tom');
 
--- insertion will fail
-INSERT INTO tblPerson(ID, Name, Email, Age)
-	VALUES(11, 'Chuck', 'c@c.com', 200);
+INSERT INTO tblPerson1(Name) VALUES('Sara');
 
-INSERT INTO tblPerson(ID, Name, Email, Age)
-	VALUES(11, 'Chuck', 'c@c.com', 25);
+DELETE FROM tblPerson1 WHERE PersonId=1;
 
-INSERT INTO tblPerson(ID, Name, Email, Age)
-	VALUES(12, 'Chuck', 'c@c.com', NULL);
+INSERT INTO tblPerson1(Name) VALUES('Todd');
+
+INSERT INTO tblPerson1(PersonId, Name) VALUES(1, 'Jane');
+
+-- in MySQL doesn't need this
+-- SET IDENTITY_INSERT tblPerson1 ON;
+
+-- in MySQL doesn't need this
+-- SET IDENTITY_INSERT tblPerson1 OFF;
+
+INSERT INTO tblPerson1(Name) VALUES('Martin');
+
+DELETE FROM tblPerson1;
+
+INSERT INTO tblPerson1(Name) VALUES('Martin');
+
+DELETE FROM tblPerson1;
+
+-- this doesn't work in MySQL
+-- DBCC CHECKIDENT(tblPerson1, RESEED, 0);
+
+ALTER TABLE tblperson1
+AUTO_INCREMENT = 1 ;
+
+INSERT INTO tblPerson1(Name) VALUES('Martin');

@@ -1,43 +1,28 @@
-USE Sample;
+CREATE TABLE Test1(
+	ID INT GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 ),
+	Value VARCHAR(20)
+	);
 
-CREATE TABLE tblPerson1(
-	PersonId INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START 1 INCREMENT 1),
-	Name VARCHAR(50));
+CREATE TABLE Test2(
+	ID INT GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 ),
+	Value VARCHAR(20)
+	);
 
-INSERT INTO tblPerson1(Name) VALUES('John');
+INSERT INTO Test1(Value) VALUES('x');
 
-INSERT INTO tblPerson1(Name) VALUES('Tom');
+SELECT lastval();
 
-INSERT INTO tblPerson1(Name) VALUES('Sara');
+INSERT INTO Test1 VALUES('x');
 
-DELETE FROM tblPerson1 WHERE PersonId=1;
+-- same session and the same scope
+SELECT lastval();
 
-INSERT INTO tblPerson1(Name) VALUES('Todd');
+-- same session and accross any scope
+SELECT currval('test1_id_seq');
 
--- insertion will fail
-INSERT INTO tblPerson1(PersonId, Name) VALUES(1, 'Jane');
+-- specific table across any session and any scope
+SELECT MAX(ID) FROM test1;
 
--- in postgre, no need this
--- SET IDENTITY_INSERT tblPerson1 ON;
+INSERT INTO Test1 VALUES('x');
 
-INSERT INTO tblPerson1(PersonId, Name) 
-	OVERRIDING SYSTEM VALUE
-	VALUES(1, 'Jane');
-	
--- in postgre, no need this
--- SET IDENTITY_INSERT tblPerson1 OFF;
-
-INSERT INTO tblPerson1(Name) VALUES('Martin');
-
-DELETE FROM tblPerson1;
-
-INSERT INTO tblPerson1(Name) VALUES('Martin');
-
-DELETE FROM tblPerson1;
-
--- in postgre, this isn't work
--- DBCC CHECKIDENT(tblPerson1, RESEED, 0);
-
-ALTER SEQUENCE tblperson1_personid_seq RESTART;
-
-INSERT INTO tblPerson1(Name) VALUES('Martin');
+INSERT INTO Test2 VALUES('zzz');

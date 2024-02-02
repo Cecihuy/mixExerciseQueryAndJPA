@@ -1,39 +1,41 @@
 USE Sample;
 
-CREATE TABLE tblPerson1(
-	PersonId INT PRIMARY KEY AUTO_INCREMENT,
-	Name NVARCHAR(50));
+CREATE TABLE Test1(
+	ID INT PRIMARY KEY AUTO_INCREMENT,
+	Value NVARCHAR(20)
+	);
 
-INSERT INTO tblPerson1(Name) VALUES('John');
+CREATE TABLE Test2(
+	ID INT PRIMARY KEY AUTO_INCREMENT,
+	Value NVARCHAR(20)
+	);
 
-INSERT INTO tblPerson1(Name) VALUES('Tom');
+INSERT INTO Test1(Value) VALUES('x');
 
-INSERT INTO tblPerson1(Name) VALUES('Sara');
+SELECT LAST_INSERT_ID();
 
-DELETE FROM tblPerson1 WHERE PersonId=1;
+INSERT INTO Test1(Value) VALUES('x');
 
-INSERT INTO tblPerson1(Name) VALUES('Todd');
+-- same session and the same scope
+SELECT LAST_INSERT_ID();
 
-INSERT INTO tblPerson1(PersonId, Name) VALUES(1, 'Jane');
+-- same session and accross any scope
+SELECT @@IDENTITY;
 
--- in MySQL doesn't need this
--- SET IDENTITY_INSERT tblPerson1 ON;
+-- specific table across any session and any scope
+SELECT AUTO_INCREMENT
+	FROM information_schema.TABLES
+	WHERE TABLE_NAME = 'test1';
 
--- in MySQL doesn't need this
--- SET IDENTITY_INSERT tblPerson1 OFF;
+DELIMITER $$
+USE sample$$
+CREATE DEFINER = CURRENT_USER TRIGGER trForInsert AFTER INSERT ON test1 FOR EACH ROW
+BEGIN
+	INSERT INTO Test2(Value)
+				VALUES('YYYY');
+END$$
+DELIMITER ;
 
-INSERT INTO tblPerson1(Name) VALUES('Martin');
+INSERT INTO Test1(Value) VALUES('x');
 
-DELETE FROM tblPerson1;
-
-INSERT INTO tblPerson1(Name) VALUES('Martin');
-
-DELETE FROM tblPerson1;
-
--- this doesn't work in MySQL
--- DBCC CHECKIDENT(tblPerson1, RESEED, 0);
-
-ALTER TABLE tblperson1
-AUTO_INCREMENT = 1 ;
-
-INSERT INTO tblPerson1(Name) VALUES('Martin');
+INSERT INTO Test2(Value) VALUES('zzz');

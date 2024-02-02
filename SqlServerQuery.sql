@@ -1,36 +1,37 @@
 USE Sample;
 
-CREATE TABLE tblPerson1(
-	PersonId INT PRIMARY KEY IDENTITY(1,1),
-	Name NVARCHAR(50));
+CREATE TABLE Test1(
+	ID INT IDENTITY(1,1),
+	Value NVARCHAR(20)
+	);
 
-INSERT INTO tblPerson1 VALUES('John');
+CREATE TABLE Test2(
+	ID INT IDENTITY(1,1),
+	Value NVARCHAR(20)
+	);
 
-INSERT INTO tblPerson1 VALUES('Tom');
+INSERT INTO Test1 VALUES('x');
 
-INSERT INTO tblPerson1 VALUES('Sara');
+SELECT SCOPE_IDENTITY();
 
-DELETE FROM tblPerson1 WHERE PersonId=1;
+INSERT INTO Test1 VALUES('x');
 
-INSERT INTO tblPerson1 VALUES('Todd');
+-- same session and the same scope
+SELECT SCOPE_IDENTITY();
 
--- insertion will fail
-INSERT INTO tblPerson1 VALUES(1, 'Jane');
+-- same session and accross any scope
+SELECT @@IDENTITY;
 
-SET IDENTITY_INSERT tblPerson1 ON;
+-- specific table across any session and any scope
+SELECT IDENT_CURRENT('Test1');
 
-INSERT INTO tblPerson1(PersonId, Name) VALUES(1, 'Jane');
+CREATE TRIGGER trForInsert
+	ON Test1 FOR INSERT	AS
+	BEGIN
+		INSERT INTO Test2
+			VALUES('YYYY')
+	END;
 
-SET IDENTITY_INSERT tblPerson1 OFF;
+INSERT INTO Test1 VALUES('x');
 
-INSERT INTO tblPerson1 VALUES('Martin');
-
-DELETE FROM tblPerson1;
-
-INSERT INTO tblPerson1 VALUES('Martin');
-
-DELETE FROM tblPerson1;
-
-DBCC CHECKIDENT(tblPerson1, RESEED, 0);
-
-INSERT INTO tblPerson1 VALUES('Martin');
+INSERT INTO Test2 VALUES('zzz');

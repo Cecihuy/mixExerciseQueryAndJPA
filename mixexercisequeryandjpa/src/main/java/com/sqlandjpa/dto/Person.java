@@ -8,9 +8,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "tblPerson")
+@Table(name = "tblPerson", uniqueConstraints = @UniqueConstraint(name = "UQ_tblPerson_Email", columnNames = {"Email"}))
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,9 +19,9 @@ public class Person {
     private int id;
     @Column(name = "Name", length = 50, nullable = false)
     private String name;
-    @Column(name = "Email", length = 50, nullable = false)
+    @Column(name = "Email", length = 50, nullable = false)    
     private String email;    
-    @ManyToOne    
+    @ManyToOne
     @JoinColumn(name = "GenderID", nullable = true, unique = false, columnDefinition = "int default 3",
         foreignKey = @ForeignKey(name = "tblPerson_GenderID_FK", foreignKeyDefinition = "FOREIGN KEY (GenderID) REFERENCES tblGender (ID) ON DELETE" +
         /* please pick one for jpa hbm2ddl.auto creation. remove double slash */

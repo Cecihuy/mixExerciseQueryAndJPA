@@ -1,40 +1,43 @@
 package com.sqlandjpa.dto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "tblPerson", uniqueConstraints = @UniqueConstraint(name = "UQ_tblPerson_Email", columnNames = {"Email"}))
+@Table(name = "tblPerson")
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
     private int id;
-    @Column(name = "Name", length = 50, nullable = false)
+    @Column(name = "Name", length = 50)
     private String name;
-    @Column(name = "Email", length = 50, nullable = false)    
+    @Column(name = "Email", length = 50)    
     private String email;    
     @ManyToOne
-    @JoinColumn(name = "GenderID", nullable = true, unique = false, columnDefinition = "int default 3",
-        foreignKey = @ForeignKey(name = "tblPerson_GenderID_FK", foreignKeyDefinition = "FOREIGN KEY (GenderID) REFERENCES tblGender (ID) ON DELETE" +
-        /* please pick one for jpa hbm2ddl.auto creation. remove double slash */
-        //" SET DEFAULT"
-        //" SET NULL"
-        " CASCADE"
-        )
-    )
+    @JoinColumn(name = "GenderID")
     private Gender genderId;
-    // @Check(name = "CK_tblPerson_Age", constraints = "Age > 0 AND Age <150")  <-- this is from hibernate package
-    @Column(name = "Age", nullable = true, columnDefinition = "INT CHECK (Age > 0 AND Age <150)")
+    @Column(name = "Age")
     private int age;
+    @Column(name= "City", length = 50)
+    private String city;
         
+    @Override
+    public String toString() {
+        return "Person [id=" + id + ", name=" + name + ", email=" + email + ", genderId=" + genderId.getId() + ", age=" + age
+                + ", city=" + city + "]\n";
+    }
+    public String getCity() {
+        return city;
+    }
+    public void setCity(String city) {
+        this.city = city;
+    }
     public int getAge() {
         return age;
     }

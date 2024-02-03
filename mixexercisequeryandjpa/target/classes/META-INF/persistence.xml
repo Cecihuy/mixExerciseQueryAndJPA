@@ -9,10 +9,19 @@
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"></property>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:sqlserver://localhost;encrypt=false;databaseName=Sample;"></property>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect"></property>
+            
+            <!-- <property name="jakarta.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"></property>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost/sample"></property>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"></property> -->
+
+            <!-- <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"></property>            
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost/sample"></property>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"></property> -->
+            
             <property name="jakarta.persistence.jdbc.user" value="sa"></property>
             <property name="jakarta.persistence.jdbc.password" value="bar"></property>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect"></property>
-            <property name="hibernate.hbm2ddl.auto" value="create"></property>
+            <property name="hibernate.hbm2ddl.auto" value="none"></property>
             <property name="hibernate.show_sql" value="true"></property>
             <property name="hibernate.format_sql" value="true"></property>
         </properties>

@@ -1,14 +1,41 @@
+-- please create data manualy or use JPA Create.java
 USE Sample;
 
-ALTER TABLE tblPerson
-	ADD CONSTRAINT UQ_tblPerson_Email
-	UNIQUE(Email);
+SELECT * FROM tblPerson;
 
-INSERT INTO tblPerson(ID, Name, Email, GenderID, Age)
-	VALUES(15, 'X', 'a@B.com', 1, 20);
+SELECT DISTINCT City FROM tblPerson;
 
-INSERT INTO tblPerson(ID, Name, Email, GenderID, Age)
-	VALUES(16, 'XYZ', 'a@B.com', 1, 20);
-	
-ALTER TABLE tblPerson
-	DROP CONSTRAINT UQ_tblPerson_Email;
+SELECT * FROM tblPerson
+	WHERE City != 'London';
+    
+SELECT * FROM tblPerson
+	WHERE Age = 20 OR Age = 23 OR Age = 29;
+
+SELECT * FROM tblPerson
+	WHERE Age IN(20, 23, 29);
+    
+SELECT * FROM tblPerson
+	WHERE Age BETWEEN 20 AND 25;
+    
+SELECT * FROM tblPerson
+	WHERE City LIKE 'L%';
+
+SELECT * FROM tblPerson
+	WHERE Email NOT LIKE '_@_.com';
+
+-- MySQL doesnt have this
+SELECT * FROM tblPerson
+	WHERE Name LIKE '[^MST]%';
+    
+SELECT * FROM tblPerson
+	WHERE (City = 'London' OR City = 'Mumbai')
+	AND Age > 25;
+
+SELECT * FROM tblPerson 
+	ORDER BY City ASC, Age DESC;
+    
+SELECT * FROM tblPerson LIMIT 3;
+
+SELECT Name, Age FROM tblPerson LIMIT 3;
+
+SELECT Name, Age FROM tblPerson LIMIT 2 OFFSET 2;

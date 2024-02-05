@@ -1,40 +1,26 @@
 -- please create data manualy or use JPA Create.java
 USE Sample;
 
-SELECT * FROM tblPerson;
+SELECT SUM(Salary) FROM tblEmployee;
 
-SELECT DISTINCT City FROM tblPerson;
+SELECT City, SUM(Salary) AS TotalSalary 
+	FROM tblEmployee
+	GROUP BY City;
 
-SELECT * FROM tblPerson
-	WHERE City != 'London';
+SELECT City, Gender, SUM(Salary) AS TotalSalary 
+	FROM tblEmployee
+	GROUP BY City, Gender
+	ORDER BY City ASC;
 
-SELECT * FROM tblPerson
-	WHERE Age = 20 OR Age = 23 OR Age = 29;
+SELECT COUNT(ID) FROM tblEmployee;
 
-SELECT * FROM tblPerson
-	WHERE Age IN(20, 23, 29);
+SELECT City, Gender, SUM(Salary) AS TotalSalary, COUNT(ID) AS [Total Employees]
+	FROM tblEmployee
+	GROUP BY City, Gender
+	ORDER BY City ASC;
 
-SELECT * FROM tblPerson
-	WHERE Age BETWEEN 20 AND 25;
-
-SELECT * FROM tblPerson
-	WHERE City LIKE 'L%';
-
-SELECT * FROM tblPerson
-	WHERE Email NOT LIKE '_@_.com';
-
-SELECT * FROM tblPerson
-	WHERE Name LIKE '[^MST]%';
-
-SELECT * FROM tblPerson
-	WHERE (City = 'London' OR City = 'Mumbai')
-	AND Age > 25;
-
-SELECT * FROM tblPerson 
-	ORDER BY City ASC, Age DESC;
-
-SELECT TOP 3 * FROM tblPerson;
-
-SELECT TOP 3 Name, Age FROM tblPerson;
-
-SELECT TOP 30 PERCENT Name, Age FROM tblPerson;
+SELECT City, Gender, SUM(Salary) AS TotalSalary, COUNT(ID) AS [Total Employees]
+	FROM tblEmployee
+	GROUP BY City, Gender
+	HAVING SUM(Salary) > 5000
+	ORDER BY City ASC;

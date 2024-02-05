@@ -36,7 +36,7 @@ public class Read {
         // CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         // CriteriaQuery<Person> criteria = builder.createQuery(Person.class);
         // Root<Person> root = criteria.from(Person.class);
-        // CriteriaQuery<Person> selectWhere = criteria.select(root).where(builder.notEqual(root.get("city"), "London"));
+        // CriteriaQuery<Person> selectWhere = criteria.where(builder.notEqual(root.get("city"), "London"));
         // TypedQuery<Person> typedQuery = entityManager.createQuery(selectWhere);
         // List<Person> resultList = typedQuery.getResultList();
 
@@ -44,7 +44,7 @@ public class Read {
         // CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         // CriteriaQuery<Person> criteria = builder.createQuery(Person.class);
         // Root<Person> root = criteria.from(Person.class);
-        // CriteriaQuery<Person> selectIn = criteria.select(root).where(root.get("age").in(20, 23, 29));
+        // CriteriaQuery<Person> selectIn = criteria.where(root.get("age").in(20, 23, 29));
         // TypedQuery<Person> typedQuery = entityManager.createQuery(selectIn);
         // List<Person> resultList = typedQuery.getResultList();
 
@@ -52,7 +52,7 @@ public class Read {
         // CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         // CriteriaQuery<Person> criteria = builder.createQuery(Person.class);
         // Root<Person> root = criteria.from(Person.class);
-        // CriteriaQuery<Person> selectBetween = criteria.select(root).where(builder.between(root.get("age"), 20, 25));
+        // CriteriaQuery<Person> selectBetween = criteria.where(builder.between(root.get("age"), 20, 25));
         // TypedQuery<Person> typedQuery = entityManager.createQuery(selectBetween);
         // List<Person> resultList = typedQuery.getResultList();
 
@@ -60,7 +60,7 @@ public class Read {
         // CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         // CriteriaQuery<Person> criteria = builder.createQuery(Person.class);
         // Root<Person> root = criteria.from(Person.class);
-        // CriteriaQuery<Person> selectNotLike = criteria.select(root).where(builder.notLike(root.get("email"), "_@_.com"));
+        // CriteriaQuery<Person> selectNotLike = criteria.where(builder.notLike(root.get("email"), "_@_.com"));
         // TypedQuery<Person> typedQuery = entityManager.createQuery(selectNotLike);
         // List<Person> resultList = typedQuery.getResultList();
 
@@ -71,8 +71,8 @@ public class Read {
         // Predicate londonPred = builder.like(root.get("city"),"London");
         // Predicate mumbaiPred = builder.like(root.get("city"),"Mumbai");
         // Predicate orPred = builder.or(londonPred, mumbaiPred);
-        // Predicate gtPred = builder.gt(root.get("age"), 25);        
-        // CriteriaQuery<Person> selectCondition = criteria.select(root).where(builder.and(orPred, gtPred));
+        // Predicate gtPred = builder.gt(root.get("age"), 25);
+        // CriteriaQuery<Person> selectCondition = criteria.where(builder.and(orPred, gtPred));
         // TypedQuery<Person> typedQuery = entityManager.createQuery(selectCondition);
         // List<Person> resultList = typedQuery.getResultList();
 

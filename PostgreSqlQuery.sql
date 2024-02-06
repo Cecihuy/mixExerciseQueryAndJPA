@@ -1,26 +1,25 @@
 -- please create data manualy or use JPA Create.java
-SELECT * FROM tblperson;
 
-SELECT SUM(Salary) FROM tblEmployee;
+SELECT * FROM tblperson;SELECT Name, Gender, Salary, DepartmentName
+	FROM tblEmployee
+	INNER JOIN tblDepartment
+	ON tblEmployee.DepartmentId = tblDepartment.id;
+	
+SELECT Name, Gender, Salary, DepartmentName
+	FROM tblEmployee
+	LEFT JOIN tblDepartment
+	ON tblEmployee.DepartmentId = tblDepartment.id;
 
-SELECT City, SUM(Salary) AS TotalSalary 
+SELECT Name, Gender, Salary, DepartmentName
 	FROM tblEmployee
-	GROUP BY City;
-	
-SELECT City, Gender, SUM(Salary) AS TotalSalary 
-	FROM tblEmployee
-	GROUP BY City, Gender
-	ORDER BY City ASC;
-	
-SELECT COUNT(ID) FROM tblEmployee;
+	RIGHT JOIN tblDepartment
+	ON tblEmployee.DepartmentId = tblDepartment.id;
 
-SELECT City, Gender, SUM(Salary) AS TotalSalary, COUNT(ID) AS "Total Employees"
+SELECT Name, Gender, Salary, DepartmentName
 	FROM tblEmployee
-	GROUP BY City, Gender
-	ORDER BY City ASC;
-	
-SELECT City, Gender, SUM(Salary) AS TotalSalary, COUNT(ID) AS "Total Employees"
+	FULL JOIN tblDepartment
+	ON tblEmployee.DepartmentId = tblDepartment.id;
+
+SELECT Name, Gender, Salary, DepartmentName
 	FROM tblEmployee
-	GROUP BY City, Gender
-	HAVING SUM(Salary) > 5000
-	ORDER BY City ASC;
+	CROSS JOIN tblDepartment;

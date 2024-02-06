@@ -21,15 +21,21 @@ public class Employee {
     private String gender;    
     @Column(name = "Salary")
     private int salary;
-    @Column(name= "City", length = 50)
-    private String city;        
-
+    @ManyToOne
+    @JoinColumn(name= "DepartmentId", nullable = true, columnDefinition = "INT default NULL")
+    private Department departId;
+    
     @Override
     public String toString() {
-        return "Employee [id=" + id + ", name=" + name + ", gender=" + gender + ", salary=" + salary + ", city=" + city
-                + "]\n";
+        return "Employee [id=" + id + ", name=" + name + ", gender=" + gender + ", salary=" + salary + ", departId="
+                + departId + "]";
     }
-
+    public Department getDepartId() {
+        return departId;
+    }
+    public void setDepartId(Department departId) {
+        this.departId = departId;
+    }
     public String getGender() {
         return gender;
     }
@@ -53,11 +59,5 @@ public class Employee {
     }
     public void setSalary(int salary) {
         this.salary = salary;
-    }
-    public String getCity() {
-        return city;
-    }
-    public void setCity(String city) {
-        this.city = city;
     }
 }

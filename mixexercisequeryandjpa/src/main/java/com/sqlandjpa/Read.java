@@ -17,8 +17,9 @@ public class Read {
 
         /* SELECT Name, Gender, Salary, DepartmentName
 	        FROM tblEmployee
-	        INNER JOIN tblDepartment
-	        ON tblEmployee.DepartmentId = tblDepartment.id; */        
+	        LEFT JOIN tblDepartment
+	        ON tblEmployee.DepartmentId = tblDepartment.id
+	        WHERE tblDepartment.id IS NULL; */        
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Object[]> criteriaQuery = builder.createQuery(Object[].class);
         Root<Employee> rootEmployee = criteriaQuery.from(Employee.class);
@@ -26,8 +27,8 @@ public class Read {
             rootEmployee.get("name")
             , rootEmployee.get("gender")
             , rootEmployee.get("salary")
-            , rootEmployee.join("departId", JoinType.INNER).get("name") //just change JoinType to INNER, LEFT, or RIGHT
-            );
+            , rootEmployee.join("departId", JoinType.LEFT).get("name") //just change JoinType to INNER, LEFT, or RIGHT
+            ).where(builder.isNull(rootEmployee.join("departId", JoinType.LEFT).get("id")));
         TypedQuery<Object[]> typedQuery = entityManager.createQuery(selectInnerJoin);
         List<Object[]> resultList = typedQuery.getResultList();
         for(Object[] efl:resultList){

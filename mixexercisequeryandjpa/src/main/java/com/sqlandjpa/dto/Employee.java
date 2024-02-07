@@ -12,20 +12,20 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "EmployeeID")
-    private int employeeId;
+    private Integer employeeId;
     @Column(name = "Name", length = 20)
-    private String name;    
+    private String name;
     @Column(name = "ManagerID", nullable = true, columnDefinition = "INT DEFAULT NULL", insertable = false)
-    private int managerId;    
+    private Integer managerId;
 
     @Override
     public String toString() {
         return "Employee [employeeId=" + employeeId + ", name=" + name + ", managerId=" + managerId + "]";
     }
-    public int getEmployeeId() {
+    public Integer getEmployeeId() {
         return employeeId;
     }
-    public void setEmployeeId(int employeeId) {
+    public void setEmployeeId(Integer employeeId) {
         this.employeeId = employeeId;
     }
     public String getName() {
@@ -34,10 +34,10 @@ public class Employee {
     public void setName(String name) {
         this.name = name;
     }
-    public int getManagerId() {
+    public Integer getManagerId() {
         return managerId;
     }    
-    public void setManagerId(int managerId) {
+    public void setManagerId(Integer managerId) {
         this.managerId = managerId;
     }
 }

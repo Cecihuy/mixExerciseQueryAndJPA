@@ -7,7 +7,6 @@ import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Root;
 
 public class Read {
@@ -15,27 +14,24 @@ public class Read {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pragim");
         EntityManager entityManager = emf.createEntityManager();
 
-        /* SELECT Name, Gender, Salary, DepartmentName
-	        FROM tblEmployee
-	        LEFT JOIN tblDepartment
-	        ON tblEmployee.DepartmentId = tblDepartment.id
-	        WHERE tblDepartment.id IS NULL; */        
+        /* code below is alternate for query:
+        SELECT L.Name AS Employee, R.Name AS Manager
+            FROM tblEmployee L
+            JOIN tblEmployee R
+            ON L.ManagerID = R.EmployeeID; */        
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Object[]> criteriaQuery = builder.createQuery(Object[].class);
-        Root<Employee> rootEmployee = criteriaQuery.from(Employee.class);
+        Root<Employee> rootEmployeeL = criteriaQuery.from(Employee.class);
+        Root<Employee> rootEmployeeR = criteriaQuery.from(Employee.class);        
         CriteriaQuery<Object[]> selectInnerJoin = criteriaQuery.multiselect(
-            rootEmployee.get("name")
-            , rootEmployee.get("gender")
-            , rootEmployee.get("salary")
-            , rootEmployee.join("departId", JoinType.LEFT).get("name") //just change JoinType to INNER, LEFT, or RIGHT
-            ).where(builder.isNull(rootEmployee.join("departId", JoinType.LEFT).get("id")));
+            rootEmployeeL.get("name")
+            , rootEmployeeR.get("name")
+            ).where(builder.equal(rootEmployeeR.get("employeeId"), rootEmployeeL.get("managerId")));        
         TypedQuery<Object[]> typedQuery = entityManager.createQuery(selectInnerJoin);
         List<Object[]> resultList = typedQuery.getResultList();
         for(Object[] efl:resultList){
             System.out.print(efl[0] + " | ");
-            System.out.print(efl[1] + " | ");
-            System.out.print(efl[2] + " | ");
-            System.out.println(efl[3]);
-        }        
+            System.out.println(efl[1]);
+        }
     }    
 }

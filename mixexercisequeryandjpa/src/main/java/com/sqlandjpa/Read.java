@@ -1,5 +1,4 @@
 package com.sqlandjpa;
-import java.util.List;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.ParameterMode;
@@ -9,38 +8,21 @@ import jakarta.persistence.StoredProcedureQuery;
 public class Read {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pragim");
-        EntityManager entityManager = emf.createEntityManager();
-
-        /* CREATE PROCEDURE spGetEmployees AS
-            BEGIN
-                SELECT Name, Gender
-                    FROM tblEmployee
-            END; */
-        // StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("spGetEmployees");        
-        // List<Object[]> resultList = storedProcedureQuery.getResultList();
-        // for(Object[] efl:resultList){
-        //     System.out.print(efl[0] + " | ");
-        //     System.out.println(efl[1]);
-        // }
+        EntityManager entityManager = emf.createEntityManager();        
         
-        /* CREATE PROCEDURE spGetEmployeesByGenderAndDepartment
-            @Gndr nvarchar(20),
-            @DptId int
+        /* CREATE PROCEDURE spGetEmployeeCountByGender
+            @Gndr NVARCHAR(20),
+            @EmpCount INT OUTPUT
             AS
             BEGIN
-                SELECT Name, Gender, DepartmentId
+                SELECT @EmpCount = COUNT(Id) 
                     FROM tblEmployee
                     WHERE Gender = @Gndr
-                    AND DepartmentId = @DptId
             END; */
-        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("spGetEmployeesByGenderAndDepartment");   
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("spGetEmployeeCountByGender");   
         storedProcedureQuery.registerStoredProcedureParameter("@Gndr", String.class, ParameterMode.IN).setParameter("@Gndr", "Male");
-        storedProcedureQuery.registerStoredProcedureParameter("@DptId", Integer.class, ParameterMode.IN).setParameter("@DptId", 1);
-        List<Object[]> resultList = storedProcedureQuery.getResultList();
-        for(Object[] efl:resultList){
-            System.out.print(efl[0] + " | ");
-            System.out.print(efl[1] + " | ");
-            System.out.println(efl[2]);
-        }
+        storedProcedureQuery.registerStoredProcedureParameter("@EmpCount", Integer.class, ParameterMode.OUT);        
+        Object countResult = storedProcedureQuery.getOutputParameterValue("@EmpCount");     // actual result is Integer. we can type cast it
+        System.out.println(countResult);
     }    
 }

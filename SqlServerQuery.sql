@@ -3,38 +3,20 @@ USE Sample;
 
 SELECT*FROM tblEmployee;
 
-CREATE PROCEDURE spGetEmployees AS
-BEGIN
-	SELECT Name, Gender
-		FROM tblEmployee
-END;
-
-spGetEmployees;
-
-EXECUTE spGetEmployees;
-
-CREATE PROCEDURE spGetEmployeesByGenderAndDepartment
-@Gndr nvarchar(20),
-@DptId int
+CREATE PROCEDURE spGetEmployeeCountByGender
+@Gndr NVARCHAR(20),
+@EmpCount INT OUTPUT
 AS
 BEGIN
-	SELECT Name, Gender, DepartmentId
+	SELECT @EmpCount = COUNT(Id) 
 		FROM tblEmployee
 		WHERE Gender = @Gndr
-		AND DepartmentId = @DptId
 END;
 
-EXECUTE spGetEmployeesByGenderAndDepartment 'Male', 1;
+DECLARE @TotalCount INT
+EXECUTE spGetEmployeeCountByGender @Gndr='Male', @EmpCount=@TotalCount OUTPUT
+PRINT @TotalCount;
 
-EXECUTE spGetEmployeesByGenderAndDepartment @DptId=1, @Gndr='Male';
+sp_depends spGetEmployeeCountByGender;
 
-sp_helptext spGetEmployees;
-
-DROP PROCEDURE spGetEmployees;
-
-ALTER PROCEDURE spGetEmployees
-WITH ENCRYPTION AS
-BEGIN
-	SELECT Name, Gender
-		FROM tblEmployee
-END;
+sp_depends tblEmployee;

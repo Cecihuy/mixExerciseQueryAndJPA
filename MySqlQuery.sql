@@ -4,27 +4,16 @@ USE Sample;
 SELECT*FROM tblEmployee;
 
 DELIMITER //
-CREATE PROCEDURE spGetEmployees()
+CREATE PROCEDURE spGetEmployeeCountByGender(IN Gndr VARCHAR(20), OUT EmpCount INT)
 BEGIN
-	SELECT Name, Gender
-		FROM tblEmployee;
-END;
-
-CALL spGetEmployees;
-
-DELIMITER //
-CREATE PROCEDURE spGetEmployeesByGenderAndDepartment(Gndr varchar(20), DptId int)
-BEGIN
-	SELECT Name, Gender, DepartmentId
+	SELECT COUNT(Id) INTO EmpCount
 		FROM tblEmployee
-		WHERE Gender = Gndr
-		AND DepartmentId = DptId;
+		WHERE Gender = Gndr;
 END;
 
-CALL spGetEmployeesByGenderAndDepartment ('Male', 1);
+CALL spGetEmployeeCountByGender('Male', @bebas);
+SELECT @bebas;
 
-SHOW CREATE PROCEDURE spGetEmployees;
+SHOW PROCEDURE STATUS WHERE db = 'sample';
 
-DROP PROCEDURE spGetEmployees;
-
--- MySQL not do encryption in procedure
+SHOW CREATE PROCEDURE spGetEmployeeCountByGender;

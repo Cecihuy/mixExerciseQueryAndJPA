@@ -1,33 +1,31 @@
 package com.sqlandjpa;
 import java.util.List;
-import com.sqlandjpa.dto.Employee;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.Query;
 
 public class Read {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pragim");
         EntityManager entityManager = emf.createEntityManager();
 
-        /* SELECT id, COALESCE(FirstName, MiddleName, LastName) AS Name
-	        FROM tblEmployee; */
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Object[]> criteriaQuery = builder.createQuery(Object[].class);
-        Root<Employee> root = criteriaQuery.from(Employee.class);
-        CriteriaQuery<Object[]> selectFirstNonNull = criteriaQuery.multiselect(
-            root.get("id")
-            , builder.coalesce(root.get("firstName")
-                , builder.coalesce(root.get("middleName"), root.get("lastName"))));
-        TypedQuery<Object[]> typedQuery = entityManager.createQuery(selectFirstNonNull);
-        List<Object[]> resultList = typedQuery.getResultList();
+        /* SELECT*FROM tblIndiaCustomers
+            UNION ALL
+            SELECT*FROM tblKingdomCustomers
+            ORDER BY Name DESC; */
+        Query nativeQuery = entityManager.createNativeQuery(
+            "SELECT*FROM tblIndiaCustomers" +
+                " UNION ALL" +
+                " SELECT*FROM tblKingdomCustomers" +
+                " ORDER BY Name DESC"
+            );
+        List<Object[]> resultList = nativeQuery.getResultList();
         for(Object[] efl:resultList){
             System.out.print(efl[0] + " | ");
-            System.out.println(efl[1]);
+            System.out.print(efl[1] + " | ");
+            System.out.println(efl[2]);
         }
+        /* code above is using native query, UNION doesn't support in criteria API nor JPQL at this time*/
     }    
 }

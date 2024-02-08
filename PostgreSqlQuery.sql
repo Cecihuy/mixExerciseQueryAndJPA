@@ -1,6 +1,10 @@
 -- please create data manualy or use JPA Create.java
 
-SELECT*FROM tblEmployee;
+SELECT*FROM tblIndiaCustomers
+UNION
+SELECT*FROM tblKingdomCustomers;
 
-SELECT id, COALESCE(FirstName, MiddleName, LastName) AS Name
-	FROM tblEmployee;
+SELECT*FROM tblIndiaCustomers
+UNION ALL
+SELECT*FROM tblKingdomCustomers
+ORDER BY Name DESC;

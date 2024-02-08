@@ -11,36 +11,37 @@ import jakarta.persistence.Table;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)    
+    @Column(name = "Id", nullable = true)
     private Integer id;
-    @Column(name = "FirstName", nullable = true)
-    private String firstName;
-    @Column(name = "MiddleName", nullable = true)
-    private String middleName;
-    @Column(name = "LastName", nullable = true)
-    private String lastName;
+    @Column(name = "Name", nullable = true)
+    private String name;
+    @Column(name = "Gender", nullable = true)
+    private String gender;
+    @Column(name = "DepartmentId", nullable = true)
+    private Integer departmentId;
 
+    public Integer getDepartmentId() {
+        return departmentId;
+    }
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
+    }
     public Integer getId() {
         return id;
     }
     public void setId(Integer id) {
         this.id = id;
     }
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
-    public String getMiddleName() {
-        return middleName;
+    public String getGender() {
+        return gender;
     }
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-    public String getLastName() {
-        return lastName;
-    }
-    public void setLastName(String lastName) {
-        lastName = lastName;
-    }
+    public void setGender(String gender) {
+        this.gender = gender;
+    }    
 }

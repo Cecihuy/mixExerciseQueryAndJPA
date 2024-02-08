@@ -10,34 +10,37 @@ import jakarta.persistence.Table;
 @Table(name = "tblEmployee")
 public class Employee {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "EmployeeID")
-    private Integer employeeId;
-    @Column(name = "Name", length = 20)
-    private String name;
-    @Column(name = "ManagerID", nullable = true, columnDefinition = "INT DEFAULT NULL", insertable = false)
-    private Integer managerId;
+    @GeneratedValue(strategy = GenerationType.AUTO)    
+    private Integer id;
+    @Column(name = "FirstName", nullable = true)
+    private String firstName;
+    @Column(name = "MiddleName", nullable = true)
+    private String middleName;
+    @Column(name = "LastName", nullable = true)
+    private String lastName;
 
-    @Override
-    public String toString() {
-        return "Employee [employeeId=" + employeeId + ", name=" + name + ", managerId=" + managerId + "]";
+    public Integer getId() {
+        return id;
     }
-    public Integer getEmployeeId() {
-        return employeeId;
+    public void setId(Integer id) {
+        this.id = id;
     }
-    public void setEmployeeId(Integer employeeId) {
-        this.employeeId = employeeId;
+    public String getFirstName() {
+        return firstName;
     }
-    public String getName() {
-        return name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
-    public void setName(String name) {
-        this.name = name;
+    public String getMiddleName() {
+        return middleName;
     }
-    public Integer getManagerId() {
-        return managerId;
-    }    
-    public void setManagerId(Integer managerId) {
-        this.managerId = managerId;
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+    public String getLastName() {
+        return lastName;
+    }
+    public void setLastName(String lastName) {
+        lastName = lastName;
     }
 }

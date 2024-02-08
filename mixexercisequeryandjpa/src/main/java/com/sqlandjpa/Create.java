@@ -8,19 +8,23 @@ import jakarta.persistence.Persistence;
 public class Create {
     public static void main(String[] args) {
         Employee employee1 = new Employee();
-        employee1.setName("Mike");
+        employee1.setFirstName("Sam");
 
         Employee employee2 = new Employee();
-        employee2.setName("Rob");
+        employee2.setMiddleName("Todd");
+        employee2.setLastName("Tanzan");
 
         Employee employee3 = new Employee();
-        employee3.setName("Todd");
+        employee3.setLastName("Sara");
 
         Employee employee4 = new Employee();
-        employee4.setName("Ben");
+        employee4.setFirstName("Ben");
+        employee4.setMiddleName("Parker");
 
         Employee employee5 = new Employee();
-        employee5.setName("Sam");
+        employee5.setFirstName("James");
+        employee5.setMiddleName("Nick");
+        employee5.setLastName("Nancy");
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pragim");
         EntityManager entityManager = emf.createEntityManager();
@@ -32,10 +36,6 @@ public class Create {
         entityManager.persist(employee3);
         entityManager.persist(employee4);
         entityManager.persist(employee5);
-        employee2.setManagerId(employee1.getEmployeeId());
-        employee1.setManagerId(employee3.getEmployeeId());
-        employee4.setManagerId(employee1.getEmployeeId());
-        employee5.setManagerId(employee1.getEmployeeId());
         transaction.commit();        
 
         entityManager.close();

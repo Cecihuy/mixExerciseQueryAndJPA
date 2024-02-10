@@ -3,17 +3,38 @@ USE Sample;
 
 SELECT*FROM tblEmployee;
 
+-- output parameter
 DELIMITER //
-CREATE PROCEDURE spGetEmployeeCountByGender(IN Gndr VARCHAR(20), OUT EmpCount INT)
+CREATE PROCEDURE spGetTotalCountOfEmployees1(OUT totalCount INT)
 BEGIN
-	SELECT COUNT(Id) INTO EmpCount
-		FROM tblEmployee
-		WHERE Gender = Gndr;
+	SELECT COUNT(Id) INTO totalCount
+		FROM tblEmployee;
 END;
 
-CALL spGetEmployeeCountByGender('Male', @bebas);
+CALL spGetTotalCountOfEmployees1(@bebas);
 SELECT @bebas;
 
-SHOW PROCEDURE STATUS WHERE db = 'sample';
+-- return values
+DELIMITER //
+CREATE FUNCTION spGetTotalCountOfEmployees2()
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+	DECLARE simpan INTEGER;
+		SELECT COUNT(Id) INTO simpan FROM tblemployee;
+	RETURN simpan;
+END;
 
-SHOW CREATE PROCEDURE spGetEmployeeCountByGender;
+SELECT spGetTotalCountOfEmployees2();
+
+-- inOut parameter
+DELIMITER //
+CREATE PROCEDURE spGetNameById1(parId INT, OUT parName VARCHAR(20))
+BEGIN
+	SELECT Name INTO parName
+		FROM tblEmployee
+		WHERE Id = parId;
+END;
+
+CALL spGetNameById1(1, @bebas);
+SELECT @bebas;
